@@ -20,6 +20,8 @@ public class Student {
     private Map<String, OptionalInt> listeScore = new HashMap<>();
 
     public Student(String nom, String number) {
+        if(nom==null || number==null)
+            throw new NullPointerException();
         name = nom;
         registrationNumber = number;
     }
@@ -47,7 +49,7 @@ public class Student {
      * @return the score if found, <code>OptionalInt#empty()</code> otherwise.
      */
     public OptionalInt getScore(String course) {
-        return listeScore.get(course);
+        return listeScore.getOrDefault(course, OptionalInt.empty());
     }
 
     /**
@@ -128,8 +130,8 @@ public class Student {
      * A course is considered as passed if its score is higher than 12.
      */
     public Set<String> failedCourses() {
-        return listeScore.entrySet().stream().filter(entry->entry.getValue().getAsInt()<12).sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).map(Map.Entry::getKey);
-    }
+        return null;
+        //return listeScore.entrySet().stream().filter(entry->entry.getValue().getAsInt()<12).sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).map(Map.Entry::getKey);
     }
 
     /**
