@@ -77,7 +77,7 @@ public class ClassroomTest {
     }
 
     @Test
-    public void topScorers(String course, int n) {
+    public void topScorers() {
         assertThat(classroom.topScorers("fighting", 3)).containsExactly(yaraGreyjoy, gregorClegane, thorosOfMyr);
     }
 

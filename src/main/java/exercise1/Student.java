@@ -153,15 +153,14 @@ public class Student {
      * Returns the set of courses for which the student has received a score, sorted by course name.
      */
     public Set<String> attendedCourses() {
-        SortedSet<String> listCourse=null;
-        for(String key : listeScore.keySet()){
-            if(listeScore.get(key).isPresent()==true)
-            {
+        Set<String> listCourse=null;
+        for(String key : listeScore.keySet()) {
+            if (listeScore.get(key).isPresent()) {
                 listCourse.add(key);
             }
         }
-        Set<String> listCours=listCourse;
-        return listCours;
+
+        return listCourse;
         //return listeScore.keySet();//si y'avais pas de condition sur la fct, çà serait ok !
     }
 
