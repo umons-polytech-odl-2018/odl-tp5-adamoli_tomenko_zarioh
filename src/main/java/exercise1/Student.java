@@ -160,7 +160,8 @@ public class Student {
                 listCourse.add(key);
             }
         }
-        return listCourse;
+        Set<String> listCours=listCourse;
+        return listCours;
         //return listeScore.keySet();//si y'avais pas de condition sur la fct, çà serait ok !
     }
 

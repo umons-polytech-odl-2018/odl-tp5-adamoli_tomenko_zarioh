@@ -21,7 +21,7 @@ public class Classroom {
         if (student == null)
             throw new NullPointerException();
         if (students.contains(student)) {
-            throw new DuplicateStudentException();
+            throw new DuplicateStudentException(student.getRegistrationNumber());
         }
         students.add(student);
     }
