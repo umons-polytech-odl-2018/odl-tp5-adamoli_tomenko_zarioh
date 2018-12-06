@@ -63,10 +63,8 @@ public class Student {
 
         if (taille == 0) {
             return 0;
-        }
-        else
-        {
-            return moyenne/taille;
+        } else {
+            return moyenne / taille;
         }
     }
 
@@ -76,7 +74,25 @@ public class Student {
      * @return the best scored course or <code>Optional#empty()</code> if there is none.
      */
     public Optional<String> bestCourse() {
-        return null;
+        Integer max = 0;
+        String bestCourse = null;
+        for (String key : listeScore.keySet()) {
+            if (listeScore.get(key).isPresent() == true) {
+                if (listeScore.get(key).getAsInt() > max) {
+                    max = listeScore.get(key).getAsInt();
+                    bestCourse = key;
+                }
+            }
+        }
+        //return Optional.ofNullable(bestCourse);//rendra null si y'a rien, et l'élément si il existe
+        return bestCourse != null ? Optional.of(bestCourse) : Optional.ofNullable(bestCourse);
+        //return nullableScore !=null ? OptionalInt.of(nullablescore) : OptionalInt.empty();
+        //en dessous : des notes du prof
+        //return nullableScore !=null ? OptionalInt.of(nullablescore) : OptionalInt.empty();
+        /*return listeScore.entrySet().stream()
+           .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+           .map(Map.Entry::getKey)
+           .findFirst();*/
     }
 
     /**
@@ -85,7 +101,15 @@ public class Student {
      * @return the highest score or 0 if there is none.
      */
     public int bestScore() {
-        return 0;
+        Integer max = 0;
+        for (String key : listeScore.keySet()) {
+            if (listeScore.get(key).isPresent() == true) {
+                if (listeScore.get(key).getAsInt() > max) {
+                    max = listeScore.get(key).getAsInt();
+                }
+            }
+        }
+        return max;//rendra null si y'a rien, et l'élément si il existe
     }
 
     /**
