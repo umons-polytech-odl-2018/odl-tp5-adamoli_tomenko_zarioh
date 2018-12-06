@@ -52,14 +52,25 @@ public class Student {
     public double averageScore() {
         int taille = listeScore.size();
         double moyenne = 0;
+
+        for (String i : listeScore.keySet()) {
+            try {
+                moyenne += listeScore.get(i).getAsInt();
+            } catch (NoSuchElementException e) {
+                taille--;
+            }
+        }
+
         if (taille == 0) {
             return 0;
         } else {
-            for (String i:listeScore.keySet()) {
-                moyenne = double(listeScore.get(i));
-            }
-
+            return moyenne / taille;
         }
+        /*
+        * listeScore.values().stream()
+        * .mapToInt(Integer::intValue)
+        * .average()
+        * .orElse(0.0);*/
     }
 
     /**
@@ -68,7 +79,25 @@ public class Student {
      * @return the best scored course or <code>Optional#empty()</code> if there is none.
      */
     public Optional<String> bestCourse() {
-        return null;
+        Integer max = 0;
+        String bestCourse = null;
+        for (String key : listeScore.keySet()) {
+            if (listeScore.get(key).isPresent()) {
+                if (listeScore.get(key).getAsInt() > max) {
+                    max = listeScore.get(key).getAsInt();
+                    bestCourse = key;
+                }
+            }
+        }
+        //return Optional.ofNullable(bestCourse);//rendra null si y'a rien, et l'élément si il existe
+        return bestCourse != null ? Optional.of(bestCourse) : Optional.ofNullable(bestCourse);
+        //return nullableScore !=null ? OptionalInt.of(nullablescore) : OptionalInt.empty();
+        //en dessous : des notes du prof
+        //return nullableScore !=null ? OptionalInt.of(nullablescore) : OptionalInt.empty();
+        /*return listeScore.entrySet().stream()
+           .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+           .map(Map.Entry::getKey)
+           .findFirst();*/
     }
 
     /**
@@ -77,7 +106,15 @@ public class Student {
      * @return the highest score or 0 if there is none.
      */
     public int bestScore() {
-        return 0;
+        Integer max = 0;
+        for (String key : listeScore.keySet()) {
+            if (listeScore.get(key).isPresent() == true) {
+                if (listeScore.get(key).getAsInt() > max) {
+                    max = listeScore.get(key).getAsInt();
+                }
+            }
+        }
+        return max;
     }
 
     /**
@@ -92,22 +129,47 @@ public class Student {
      * Returns <code>true</code> if the student has an average score greater than or equal to 12.0 and has less than 3 failed courses.
      */
     public boolean isSuccessful() {
-        return false;
+        if(this.averageScore()<12){//si la moyenne est déjà plus petite que 12, alors il a raté
+            return false;
+        }
+        else {//sinon, on regarde si il a moins de 3 échecs, si c'est le cas, alors il réussit!
+            int failedCourse = 0;
+            for (String key : listeScore.keySet()) {
+                if (listeScore.get(key).isPresent()) {
+                    if (listeScore.get(key).getAsInt() <10) {
+                        failedCourse+=1;
+                        if(failedCourse>2)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
     }
 
     /**
      * Returns the set of courses for which the student has received a score, sorted by course name.
      */
     public Set<String> attendedCourses() {
-        return null;
+        SortedSet<String> listCourse=null;
+        for(String key : listeScore.keySet()){
+            if(listeScore.get(key).isPresent()==true)
+            {
+                listCourse.add(key);
+            }
+        }
+        return listCourse;
+        //return listeScore.keySet();//si y'avais pas de condition sur la fct, çà serait ok !
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
     public String getRegistrationNumber() {
-        return null;
+        return registrationNumber;
     }
 
     @Override
