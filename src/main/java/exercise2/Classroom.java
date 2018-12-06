@@ -6,6 +6,7 @@ import exercise1.Student;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Classroom {
 
@@ -88,12 +89,14 @@ public class Classroom {
      * @return a sorted list of students or an empty list.
      */
     public List<Student> successfulStudents() {
-        List<Student> listOfStudents = null;
+        /*List<Student> listOfStudents = null;
         for (Student student : students) {
             if (student.isSuccessful())
                 listOfStudents.add(student);
         }
-        listOfStudents.sort(Comparator.comparing(Student::averageScore));
-        return listOfStudents;
+        listOfStudents.sort(Comparator.comparing(Student::averageScore));*/
+        return students.stream()
+            .filter(x -> x.isSuccessful() == false)
+            .collect(Collectors.toList());
     }
 }

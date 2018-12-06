@@ -1,6 +1,7 @@
 package exercise1;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a student.
@@ -130,8 +131,11 @@ public class Student {
      * A course is considered as passed if its score is higher than 12.
      */
     public Set<String> failedCourses() {
-        return null;
-        //return listeScore.entrySet().stream().filter(entry->entry.getValue().getAsInt()<12).sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).map(Map.Entry::getKey);
+        //return null;
+        return listeScore.entrySet().stream()
+            .filter(x->x.getValue().getAsInt()<=12)
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toSet());
     }
 
     /**
@@ -142,19 +146,9 @@ public class Student {
             return false;
         }
         else {//sinon, on regarde si il a moins de 3 échecs, si c'est le cas, alors il réussit!
-            int failedCourse = 0;
-            for (String key : listeScore.keySet()) {
-                if (listeScore.get(key).isPresent()) {
-                    if (listeScore.get(key).getAsInt() <10) {
-                        failedCourse+=1;
-                        if(failedCourse>2)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
+            if(this.failedCourses().size() >= 3){
+                return false;
+            }else return true;
         }
     }
 
@@ -162,15 +156,7 @@ public class Student {
      * Returns the set of courses for which the student has received a score, sorted by course name.
      */
     public Set<String> attendedCourses() {
-        Set<String> listCourse=null;
-        for(String key : listeScore.keySet()) {
-            if (listeScore.get(key).isPresent()) {
-                listCourse.add(key);
-            }
-        }
-
-        return listCourse;
-        //return listeScore.keySet();//si y'avais pas de condition sur la fct, çà serait ok !
+        return listeScore.keySet().stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public String getName() {
