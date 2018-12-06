@@ -13,6 +13,10 @@ public class DuplicateStudentException extends RuntimeException {
         this.registrationNumber = registrationNumber;
     }
 
+    public DuplicateStudentException() {
+
+    }
+
     public String getRegistrationNumber() {
         return registrationNumber;
     }
