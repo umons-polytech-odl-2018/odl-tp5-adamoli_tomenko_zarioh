@@ -17,22 +17,22 @@ public class Student {
 
     private String name;
     private String registrationNumber;
-    private Map<String, OptionalInt> listeScore=new HashMap<>();
+    private Map<String, OptionalInt> listeScore = new HashMap<>();
 
     public Student(String nom, String number) {
-        name=nom;
-        registrationNumber=number;
+        name = nom;
+        registrationNumber = number;
     }
 
     /**
      * Sets the score of this student for the given course.
      * If the score is set twice for the same course, the new score replaces the previous one.
      *
-     * @throws NullPointerException if the course name is null.
+     * @throws NullPointerException     if the course name is null.
      * @throws IllegalArgumentException if the score is less than 0 or greater than 20.
      */
-    public void setScore(String course, OptionalInt score) {
-        listeScore.put(course, score);
+    public void setScore(String course, int score) {
+        listeScore.put(course, OptionalInt.of(score));
     }
 
     /**
@@ -50,14 +50,13 @@ public class Student {
      * @return the average score or 0 if there is none.
      */
     public double averageScore() {
-        int taille=listeScore.size();
-        double moyenne=0;
-        if(taille==0) {
+        int taille = listeScore.size();
+        double moyenne = 0;
+        if (taille == 0) {
             return 0;
-        }
-        else{
-            for(int i=0; i<taille; i++){
-                moyen
+        } else {
+            for (String i:listeScore.keySet()) {
+                moyenne = double(listeScore.get(i));
             }
 
         }
@@ -99,7 +98,9 @@ public class Student {
     /**
      * Returns the set of courses for which the student has received a score, sorted by course name.
      */
-    public Set<String> attendedCourses() { return null; }
+    public Set<String> attendedCourses() {
+        return null;
+    }
 
     public String getName() {
         return null;
