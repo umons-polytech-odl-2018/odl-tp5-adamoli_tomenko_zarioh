@@ -52,13 +52,21 @@ public class Student {
     public double averageScore() {
         int taille = listeScore.size();
         double moyenne = 0;
+
+        for (String i : listeScore.keySet()) {
+            try {
+                moyenne += listeScore.get(i).getAsInt();
+            } catch (NoSuchElementException e) {
+                taille--;
+            }
+        }
+
         if (taille == 0) {
             return 0;
-        } else {
-            for (String i:listeScore.keySet()) {
-                moyenne = double(listeScore.get(i));
-            }
-
+        }
+        else
+        {
+            return moyenne/taille;
         }
     }
 
